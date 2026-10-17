@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion as useFramerReduced } from "framer-motion";
+import { motion } from "framer-motion";
 
 import {
   SidebarGroup,
@@ -11,7 +11,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem
 } from "@/components/ui/sidebar";
-import { fadeUp, springSoft, staggerContainer, useReducedMotion } from "@/lib/motion";
+import { fadeUp, springSoft, staggerContainer, useMotionDisabled } from "@/lib/motion";
 import {
   CalendarClockIcon,
   GaugeIcon,
@@ -73,7 +73,7 @@ function isActive(pathname: string, href: string) {
 export function NavMain() {
   const pathname = usePathname();
   const { data: overview } = useSWR<Overview>("/stats/overview");
-  const reduced = useReducedMotion() || useFramerReduced();
+  const reduced = useMotionDisabled();
 
   const badgeValue = (b?: NavItem["badge"]) => {
     if (!overview || !b) return null;

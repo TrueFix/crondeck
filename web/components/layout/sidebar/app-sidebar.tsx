@@ -26,8 +26,8 @@ import { StatusOrb } from "@/components/crondeck/status";
 import type { Overview } from "@/lib/api";
 import { percent } from "@/lib/format";
 import { MotionPanel } from "@/components/crondeck/motion-shell";
-import { motion, useReducedMotion as useFramerReduced } from "framer-motion";
-import { springSoft, useMotionOff } from "@/lib/motion";
+import { motion } from "framer-motion";
+import { springSoft, useMotionDisabled } from "@/lib/motion";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
@@ -41,7 +41,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   }, [pathname]);
 
   const rate = overview?.success_rate_24h ?? 0;
-  const motionOff = useMotionOff() || useFramerReduced();
+  const motionOff = useMotionDisabled();
 
   return (
     <Sidebar

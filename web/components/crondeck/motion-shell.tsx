@@ -2,12 +2,7 @@
 
 import * as React from "react";
 import { usePathname } from "next/navigation";
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion as useFramerReduced,
-  type HTMLMotionProps
-} from "framer-motion";
+import { AnimatePresence, motion, type HTMLMotionProps } from "framer-motion";
 
 import {
   fadeUp,
@@ -18,14 +13,10 @@ import {
   springSnappy,
   springSoft,
   staggerContainer,
-  useMotionOff
+  useMotionDisabled
 } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
-
-function useMotionDisabled() {
-  return !!(useMotionOff() || useFramerReduced());
-}
 
 /** Cross-fade + slide when navigating between app routes. */
 export function RouteMotion({ children }: { children: React.ReactNode }) {

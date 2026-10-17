@@ -1,16 +1,16 @@
 "use client";
 
 import { MenuIcon, XIcon } from "lucide-react";
-import { motion, useReducedMotion as useFramerReduced } from "framer-motion";
+import { motion } from "framer-motion";
 
 import { cn } from "@/lib/utils";
 import { useSidebar } from "@/components/ui/sidebar";
-import { springSnappy, useReducedMotion } from "@/lib/motion";
+import { springSnappy, useMotionDisabled } from "@/lib/motion";
 
 export function SidebarToggle({ className }: { className?: string }) {
   const { toggleSidebar, open, openMobile, isMobile } = useSidebar();
   const sidebarOpen = isMobile ? openMobile : open;
-  const reduced = useReducedMotion() || useFramerReduced();
+  const reduced = useMotionDisabled();
 
   return (
     <button

@@ -1,11 +1,11 @@
 "use client";
 
-import { motion, useReducedMotion as useFramerReduced } from "framer-motion";
+import { motion } from "framer-motion";
 
-import { fadeIn, springSoft, useMotionOff } from "@/lib/motion";
+import { fadeIn, springSoft, useMotionDisabled } from "@/lib/motion";
 
 export function HeaderEnter({ children, className }: { children: React.ReactNode; className?: string }) {
-  const off = useMotionOff() || useFramerReduced();
+  const off = useMotionDisabled();
   return (
     <motion.div
       className={className}

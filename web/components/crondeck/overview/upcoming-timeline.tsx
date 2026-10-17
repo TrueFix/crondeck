@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import useSWR from "swr";
-import { motion, useReducedMotion as useFramerReduced } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowRightIcon, CalendarClockIcon } from "lucide-react";
 
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,7 +15,7 @@ import { dateTime, relativeTime, shortTime } from "@/lib/format";
 import { useUIPreferences } from "@/hooks/use-ui-preferences";
 import { JobTypeIcon, jobTypeDot } from "@/components/crondeck/job-type";
 import { cn } from "@/lib/utils";
-import { fadeUp, springSoft, staggerContainer, useReducedMotion } from "@/lib/motion";
+import { fadeUp, springSoft, staggerContainer, useMotionDisabled } from "@/lib/motion";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const HOURS = 24;
@@ -29,7 +29,7 @@ function UpcomingMobileList({
   items: { id: string; name: string; type: JobType; at: string }[];
   now: number;
 }) {
-  const reduced = useReducedMotion() || useFramerReduced();
+  const reduced = useMotionDisabled();
 
   return (
     <motion.ul

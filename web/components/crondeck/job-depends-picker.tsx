@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { api, type Job } from "@/lib/api";
+import type { Job } from "@/lib/api";
 import { JobTypeIcon } from "@/components/crondeck/job-type";
 
 const DEP_SCHEDULE = "@dependency";

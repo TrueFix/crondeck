@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import type { Transition, Variants } from "framer-motion";
+import { useReducedMotion as useFramerReducedMotion, type Transition, type Variants } from "framer-motion";
 
 function readReduced() {
   if (typeof document === "undefined") return false;
@@ -90,6 +90,13 @@ export const popIn: Variants = {
 export function useMotionOff() {
   const reduced = useReducedMotion();
   return reduced;
+}
+
+/** CronDeck effects off and/or Framer reduced-motion — always call this instead of `a || useFramerReduced()`. */
+export function useMotionDisabled() {
+  const off = useMotionOff();
+  const framerReduced = useFramerReducedMotion();
+  return off || framerReduced;
 }
 
 export function motionProps(reduced: boolean, transition: Transition = springSnappy) {

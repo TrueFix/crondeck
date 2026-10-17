@@ -1,11 +1,11 @@
 "use client";
 
-import { motion, useReducedMotion as useFramerReduced } from "framer-motion";
+import { motion } from "framer-motion";
 
-import { springSnappy, useMotionOff } from "@/lib/motion";
+import { springSnappy, useMotionDisabled } from "@/lib/motion";
 
 export default function Logo() {
-  const off = useMotionOff() || useFramerReduced();
+  const off = useMotionDisabled();
   return (
     <motion.img
       src="/icon.svg"
