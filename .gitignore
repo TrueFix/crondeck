@@ -1,0 +1,11 @@
+.env
+data/
+bin/
+web/out/
+web/.next/
+web/node_modules/
+web/next-env.d.ts
+web/AGENTS.md
+*.db
+*.db-shm
+*.db-wal

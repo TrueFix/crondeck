@@ -1,0 +1,615 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/* -------------------------------------------------------------------------- */
+/*  CronDeck palette — violet primary, aurora chart colours, status tokens    */
+/* -------------------------------------------------------------------------- */
+
+:root {
+  --workspace-tint: oklch(.985 .008 180 / 68%);
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+  --font-geist-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  /* Optional locally installed fonts; never fetch font files over the network. */
+  --font-geist: var(--font-sans);
+  --font-inter: Inter, var(--font-sans);
+  --font-roboto: Roboto, var(--font-sans);
+  --font-montserrat: Montserrat, var(--font-sans);
+  --font-poppins: Poppins, var(--font-sans);
+  --font-overpass-mono: var(--font-geist-mono);
+  --font-pt-sans: "PT Sans", var(--font-sans);
+  --font-plus-jakarta-sans: "Plus Jakarta Sans", var(--font-sans);
+  --font-hedvig-letters-serif: "Iowan Old Style", Georgia, serif;
+  --font-kumbh-sans: "Kumbh Sans", var(--font-sans);
+  --font-outfit: Outfit, var(--font-sans);
+  --display-family: var(--font-sans);
+  --background: oklch(0.975 0.008 285);
+  --foreground: oklch(0.2 0.03 285);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.03 285);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.03 285);
+  --primary: oklch(.48 .1 182);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.95 0.015 285);
+  --secondary-foreground: oklch(0.25 0.04 285);
+  --muted: oklch(0.95 0.012 285);
+  --muted-foreground: oklch(0.5 0.03 285);
+  --accent: oklch(0.94 0.025 285);
+  --accent-foreground: oklch(0.25 0.04 285);
+  --destructive: oklch(0.6 0.22 22);
+  --border: oklch(0.2 0.03 285 / 10%);
+  --input: oklch(0.2 0.03 285 / 14%);
+  --ring: oklch(0.55 0.22 285 / 60%);
+  --chart-1: oklch(.65 .13 180);
+  --chart-2: oklch(0.7 0.16 165);
+  --chart-3: oklch(0.72 0.14 225);
+  --chart-4: oklch(.72 .12 305);
+  --chart-5: oklch(0.8 0.15 75);
+  --radius: 0.75rem;
+  --sidebar: oklch(0.975 0.008 285);
+  --sidebar-foreground: oklch(0.42 0.03 285);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.2 0.03 285 / 7%);
+  --sidebar-accent-foreground: oklch(0.2 0.03 285);
+  --sidebar-border: oklch(0.2 0.03 285 / 8%);
+  --sidebar-ring: oklch(0.55 0.22 285 / 60%);
+
+  /* status tokens (independent of the chart preset) */
+  --status-success: oklch(0.68 0.16 160);
+  --status-failed: var(--destructive);
+  --status-running: oklch(0.62 0.2 260);
+  --status-warning: oklch(0.75 0.16 70);
+  --status-idle: var(--muted-foreground);
+
+  /* liquid glass */
+  --glass-tint: 84%;
+  --glass-tint-strong: 94%;
+  --glass-blur: 12px;
+  --glass-edge: oklch(1 0 0 / 70%);
+  --glass-shadow: oklch(0.3 0.08 285 / 14%);
+  --aurora-opacity: 0.55;
+
+  --display-weight: 650;
+}
+
+.dark {
+  --workspace-tint: oklch(.19 .018 200 / 66%);
+  --background: oklch(0.15 0.025 285);
+  --foreground: oklch(0.96 0.01 285);
+  --card: oklch(0.22 0.03 285);
+  --card-foreground: oklch(0.96 0.01 285);
+  --popover: oklch(0.22 0.03 285);
+  --popover-foreground: oklch(0.96 0.01 285);
+  --primary: oklch(.8 .12 177);
+  --primary-foreground: oklch(0.16 0.03 285);
+  --secondary: oklch(0.28 0.03 285);
+  --secondary-foreground: oklch(0.96 0.01 285);
+  --muted: oklch(0.27 0.03 285);
+  --muted-foreground: oklch(0.72 0.03 285);
+  --accent: oklch(0.3 0.04 285);
+  --accent-foreground: oklch(0.96 0.01 285);
+  --destructive: oklch(0.68 0.2 22);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 14%);
+  --ring: oklch(0.7 0.18 285 / 60%);
+  --chart-1: oklch(.8 .12 177);
+  --chart-2: oklch(0.75 0.15 165);
+  --chart-3: oklch(0.75 0.13 225);
+  --chart-4: oklch(.75 .13 305);
+  --chart-5: oklch(0.82 0.14 75);
+  --sidebar: oklch(0.15 0.025 285);
+  --sidebar-foreground: oklch(0.78 0.02 285);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: oklch(0.16 0.03 285);
+  --sidebar-accent: oklch(1 0 0 / 8%);
+  --sidebar-accent-foreground: oklch(0.98 0 0);
+  --sidebar-border: oklch(1 0 0 / 8%);
+  --sidebar-ring: oklch(0.7 0.18 285 / 60%);
+
+  --status-success: oklch(0.75 0.15 160);
+  --status-running: oklch(0.72 0.16 255);
+  --status-warning: oklch(0.8 0.14 75);
+
+  --glass-tint: 88%;
+  --glass-tint-strong: 94%;
+  --glass-edge: oklch(1 0 0 / 14%);
+  --glass-shadow: oklch(0 0 0 / 45%);
+  --aurora-opacity: 0.38;
+}
+
+@theme inline {
+  @keyframes pulse-dot {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+    50% {
+      transform: scale(1.5);
+      opacity: 1;
+    }
+  }
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-status-success: var(--status-success);
+  --color-status-failed: var(--status-failed);
+  --color-status-running: var(--status-running);
+  --color-status-warning: var(--status-warning);
+  --color-status-idle: var(--status-idle);
+
+  --font-display: var(--display-family);
+  --display-weight: var(--display-weight);
+  --font-sans: var(--font-sans);
+  --font-heading: var(--font-sans);
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply text-foreground;
+  }
+  html {
+    @apply bg-background font-sans;
+  }
+
+  .font-display {
+    font-weight: var(--display-weight);
+  }
+
+  [data-slot="button"],
+  [data-slot="dialog-trigger"],
+  [data-slot="dropdown-menu-item"],
+  [data-slot="command-item"],
+  [data-slot="toggle-group-item"],
+  [data-slot="dropdown-menu-trigger"],
+  [data-slot="popover-trigger"],
+  [data-slot="tooltip-trigger"],
+  [data-slot="sheet-trigger"],
+  [data-slot="tabs-trigger"],
+  [data-slot="collapsible-trigger"] {
+    @apply cursor-pointer!;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Liquid glass                                                              */
+/* -------------------------------------------------------------------------- */
+
+/* Static radial lighting gives depth without continuously rasterizing large blurred layers. */
+.lg-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 12% 12%, color-mix(in oklch, var(--chart-1) 35%, transparent), transparent 52%),
+    radial-gradient(ellipse at 92% 80%, color-mix(in oklch, var(--chart-4) 28%, transparent), transparent 48%),
+    radial-gradient(ellipse at 50% 110%, color-mix(in oklch, var(--chart-3) 20%, transparent), transparent 60%),
+    var(--background);
+}
+.lg-backdrop::after {
+  content: "";
+  position: absolute;
+  width: 78vw; height: 78vw; top: -40vw; right: -15vw;
+  border: 1px solid color-mix(in oklch, var(--foreground) 7%, transparent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 80px color-mix(in oklch, var(--foreground) 2%, transparent), 0 0 0 160px color-mix(in oklch, var(--foreground) 1%, transparent);
+}
+
+/* Glass surface utilities */
+@utility glass {
+  background: color-mix(in oklch, var(--card) var(--glass-tint), transparent);
+  border-color: color-mix(in oklch, var(--foreground) 9%, transparent);
+  box-shadow:
+    inset 0 1px 0 0 var(--glass-edge),
+    0 8px 24px -16px var(--glass-shadow);
+}
+@utility glass-strong {
+  background: color-mix(in oklch, var(--card) var(--glass-tint-strong), transparent);
+  backdrop-filter: blur(var(--glass-blur)) saturate(130%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(130%);
+  border-color: color-mix(in oklch, var(--foreground) 10%, transparent);
+  box-shadow:
+    inset 0 1px 0 0 var(--glass-edge),
+    0 20px 60px -20px var(--glass-shadow);
+}
+/* specular sheen that follows the top edge — the "liquid" highlight */
+@utility glass-sheen {
+  position: relative;
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: -1;
+    background: linear-gradient(
+      160deg,
+      color-mix(in oklch, var(--foreground) 4%, transparent) 0%,
+      transparent 32%,
+      transparent 70%,
+      color-mix(in oklch, var(--chart-1) 10%, transparent) 100%
+    );
+  }
+}
+
+/* Apply glass to shadcn primitives everywhere */
+[data-slot="card"] {
+  @apply glass glass-sheen;
+  border-radius: 1.35rem;
+  min-width: 0;
+}
+[data-slot="dialog-content"],
+[data-slot="alert-dialog-content"],
+[data-slot="sheet-content"],
+[data-slot="popover-content"],
+[data-slot="dropdown-menu-content"],
+[data-slot="dropdown-menu-sub-content"],
+[data-slot="select-content"],
+[data-slot="command-dialog"] [data-slot="dialog-content"],
+[data-slot="hover-card-content"] {
+  @apply glass-strong;
+}
+[data-slot="sidebar-inner"] {
+  background: transparent;
+}
+[data-slot="sidebar-inset"] {
+  background: transparent !important;
+  box-shadow: none;
+}
+[data-slot="table-container"] [data-slot="table-row"]:hover {
+  background: color-mix(in oklch, var(--primary) 5%, transparent);
+}
+[data-slot="input"],
+[data-slot="textarea"],
+[data-slot="select-trigger"],
+[data-slot="input-group"] {
+  background: color-mix(in oklch, var(--background) 55%, transparent);
+}
+
+/* Status orb (in components layer so size-* utilities can override it) */
+@layer components {
+.status-orb {
+  position: relative;
+  display: inline-flex;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 9999px;
+  background: currentColor;
+  box-shadow: 0 0 0 3px color-mix(in oklch, currentColor 18%, transparent), 0 0 12px color-mix(in oklch, currentColor 60%, transparent);
+}
+.status-orb[data-pulse="true"]::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  border: 2px solid currentColor;
+  animation: orb-ping 1.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+@keyframes orb-ping {
+  75%, 100% { transform: scale(2); opacity: 0; }
+}
+
+}
+
+/* Gradient text for hero headings */
+.text-aurora {
+  background: linear-gradient(100deg, var(--chart-1), var(--chart-4) 45%, var(--chart-3));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Hover lift */
+.lift {
+  transition: transform 180ms ease;
+}
+.lift:hover {
+  transform: translateY(-2px);
+}
+
+@keyframes ticker {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+
+/* Login shake */
+@keyframes shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(3px); }
+  30%, 50%, 70% { transform: translateX(-6px); }
+  40%, 60% { transform: translateX(6px); }
+}
+.animate-shake { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
+
+/* Log viewer */
+.log-view {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+  tab-size: 4;
+}
+
+/* Spatial hierarchy: quiet floating surfaces, crisp controls, generous typography. */
+[data-slot="sidebar-menu-button"][data-active="true"] {
+  background: color-mix(in oklch, var(--primary) 10%, var(--card));
+  color: var(--primary);
+  box-shadow: inset 0 1px 0 var(--glass-edge), 0 2px 6px -4px var(--glass-shadow);
+}
+[data-slot="button"] { transition-property: background-color, color, opacity, transform; }
+[data-slot="button"]:active { transform: scale(.98); }
+.font-display { letter-spacing: -.035em; }
+
+/* Low power mode also disables the remaining small composited effects. */
+html[data-density="compact"] [data-slot="table-cell"],
+html[data-density="compact"] [data-slot="table-head"] { padding-top: .35rem; padding-bottom: .35rem; }
+html[data-density="compact"] [data-slot="card"] { --card-spacing: .75rem; }
+
+/* CronDeck's own mineral-glass canvas. Static color fields and contour lines
+   supply depth; there are no scene assets or full-window GPU blur passes. */
+body { isolation: isolate; }
+body:has(.spatial-workspace) {
+  overflow: hidden;
+  height: 100dvh;
+  max-height: 100dvh;
+}
+html:has(.spatial-workspace) {
+  overflow: hidden;
+  height: 100%;
+}
+.spatial-workspace {
+  --header-height: calc(var(--spacing) * 14);
+  --content-padding: calc(var(--spacing) * 6);
+  --content-margin: calc(var(--spacing) * 1.5);
+  position: relative;
+  width: min(100%, calc(100% - 2.5rem));
+  max-width: 1800px;
+  height: calc(100svh - 2.5rem);
+  min-height: 0;
+  min-width: 0;
+  margin: 1.25rem auto;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.spatial-workspace [data-slot="sidebar-container"] {
+  position: absolute;
+  height: 100%;
+  padding: 0 .9rem 0 0;
+}
+.spatial-workspace [data-slot="sidebar-inner"] {
+  background: var(--workspace-tint);
+  box-shadow: inset 0 1px 0 var(--glass-edge), 0 16px 40px -30px var(--glass-shadow);
+  border: 1px solid color-mix(in oklch, var(--foreground) 10%, transparent);
+  border-radius: 1.5rem;
+}
+.spatial-workspace [data-slot="sidebar-inset"] {
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  margin: 0;
+  border-radius: 1.75rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in oklch, var(--foreground) 9%, transparent);
+  background: color-mix(in oklch, var(--background) 38%, transparent) !important;
+}
+.spatial-workspace [data-slot="app-scroll"] {
+  scrollbar-gutter: stable;
+}
+.spatial-workspace header {
+  background: color-mix(in oklch, var(--card) 32%, transparent);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-radius: 0;
+}
+.deck-masthead {
+  background: linear-gradient(110deg, color-mix(in oklch, var(--chart-1) 12%, var(--card)), color-mix(in oklch, var(--card) 30%, transparent)) !important;
+}
+.deck-signal {
+  width: 112px; height: 112px; padding: 5px;
+  border-radius: 50%;
+  background: conic-gradient(var(--primary) var(--signal-progress), color-mix(in oklch, var(--foreground) 8%, transparent) 0);
+  box-shadow: 0 0 0 8px color-mix(in oklch, var(--primary) 4%, transparent), 0 0 0 9px color-mix(in oklch, var(--primary) 12%, transparent);
+}
+.deck-signal > div {
+  display: flex; height: 100%; flex-direction: column; align-items: center; justify-content: center;
+  border-radius: inherit; background: var(--card);
+}
+.spatial-workspace [data-slot="card"] {
+  background: color-mix(in oklch, var(--card) 33%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in oklch, var(--foreground) 7%, transparent), 0 4px 12px -10px var(--glass-shadow);
+  border: 1px solid color-mix(in oklch, var(--foreground) 9%, transparent);
+}
+.spatial-workspace [data-slot="card"]::before { display: none; }
+.spatial-workspace [data-slot="sidebar-menu-button"][data-active="true"] {
+  color: var(--foreground);
+  background: color-mix(in oklch, var(--foreground) 13%, transparent);
+}
+.spatial-workspace [data-slot="sidebar-menu-button"][aria-current="page"] {
+  box-shadow: inset 2px 0 0 var(--primary), inset 0 1px 0 var(--glass-edge);
+}
+[data-collapsible="icon"] [data-slot="sidebar-group-label"] {
+  height: 0; min-height: 0; margin: 0; padding: 0; overflow: hidden;
+}
+[data-slot="sidebar-menu-badge"] { top: 50%; }
+
+/* Grid/flex children default to min-width:auto, which lets chart and table
+   content force a card wider than a narrow viewport. */
+main .grid > *, main .flex > .min-w-0 { min-width: 0; }
+
+/* Floating mobile navigation: inset from the screen edges with rounded corners. */
+[data-slot="sheet-content"][data-mobile="true"] {
+  overflow: hidden;
+  background: color-mix(in oklch, var(--sidebar) 96%, transparent);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+[data-slot="sheet-content"][data-mobile="true"] [data-slot="sidebar-inner"] {
+  background: var(--workspace-tint);
+  border-radius: inherit;
+}
+[data-slot="sheet-content"][data-mobile="true"] [data-slot="sidebar-footer"] { padding-bottom: .75rem; }
+/* Touch devices need larger hit areas than a pointer-driven dashboard. */
+@media (pointer: coarse) {
+  [data-slot="button"][data-size="icon-sm"],
+  [data-slot="button"][data-size="icon"] { min-block-size: 2.5rem; min-inline-size: 2.5rem; }
+  [data-slot="button"][data-size="sm"],
+  [data-slot="select-trigger"],
+  [data-slot="toggle-group-item"] { min-block-size: 2.25rem; }
+  [data-slot="table-cell"] a, [data-slot="table-cell"] button { min-block-size: 1.75rem; }
+}
+
+/* Horizontal scrollers should feel intentional on touch. */
+[data-slot="table-container"] { scrollbar-width: thin; overscroll-behavior-x: contain; }
+[data-slot="dialog-overlay"], [data-slot="sheet-overlay"] {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: color-mix(in oklch, var(--foreground) 18%, transparent);
+}
+[data-slot="dialog-content"]:has([data-slot="command"]) {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: var(--popover);
+}
+.spatial-workspace [data-slot="button"][data-variant="outline"],
+.spatial-workspace [data-slot="tabs-list"] {
+  background: color-mix(in oklch, var(--foreground) 7%, transparent);
+}
+.spatial-workspace [data-slot="input"], .spatial-workspace [data-slot="input-group"],
+.spatial-workspace [data-slot="select-trigger"] {
+  background: color-mix(in oklch, var(--foreground) 6%, transparent);
+}
+html[data-effects="reduced"] .spatial-workspace { background: var(--background); }
+
+@media (max-width: 767px) {
+  html, body {
+    overflow-x: clip;
+    max-width: 100%;
+  }
+  .spatial-workspace {
+    --header-height: calc(var(--spacing) * 12);
+    --content-padding: calc(var(--spacing) * 3.5);
+    --content-margin: calc(var(--spacing) * 1);
+    width: 100%;
+    height: 100svh;
+    height: 100dvh;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    background: color-mix(in oklch, var(--background) 96%, transparent);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .spatial-workspace [data-slot="sidebar-inset"] {
+    border-radius: 0;
+    border-inline: 0;
+  }
+  .spatial-workspace [data-slot="card"] { background: var(--card); }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .spatial-workspace {
+    width: min(100%, calc(100% - 1.5rem));
+    height: calc(100svh - 1.5rem);
+    margin: 0.75rem auto;
+    --content-padding: calc(var(--spacing) * 4.5);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .spatial-workspace { background: var(--background); backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
+
+html[data-effects="reduced"] *, html[data-effects="reduced"] *::before, html[data-effects="reduced"] *::after {
+  animation: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  scroll-behavior: auto !important;
+}
+@media (max-width: 767px) {
+  [data-slot="card"], [data-slot="sheet-content"], header {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  [data-slot="card"] { background: var(--card); }
+  .lift:hover { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lg-backdrop .lg-blob,
+  .status-orb[data-pulse="true"]::after,
+  .animate-shake {
+    animation: none !important;
+  }
+  .lift:hover { transform: none; }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  [data-slot="card"],
+  [data-slot="sidebar-inset"],
+  [data-slot="dialog-content"],
+  [data-slot="sheet-content"],
+  [data-slot="popover-content"],
+  [data-slot="dropdown-menu-content"],
+  [data-slot="select-content"] {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: var(--card) !important;
+  }
+  .lg-backdrop .lg-blob { display: none; }
+}

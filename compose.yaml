@@ -1,0 +1,46 @@
+name: crondeck
+
+services:
+  crondeck:
+    image: ${CRONDECK_IMAGE:-crondeck:local}
+    build:
+      context: .
+      args:
+        EXTRA_PACKAGES: ${EXTRA_PACKAGES:-}
+    restart: unless-stopped
+    init: true
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${PORT:-8080}:8080"
+    environment:
+      ADMIN_KEY: ${ADMIN_KEY:?Set ADMIN_KEY in .env}
+      SESSION_SECRET: ${SESSION_SECRET:-}
+      APP_ENV: production
+      # Compose defaults to loopback HTTP; use true when serving behind HTTPS.
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+      DB_PATH: /data/crondeck.db
+      PORT: "8080"
+      TZ_DEFAULT: ${TZ_DEFAULT:-UTC}
+      MAX_CONCURRENT_RUNS: ${MAX_CONCURRENT_RUNS:-10}
+      MAX_OUTPUT_BYTES: ${MAX_OUTPUT_BYTES:-65536}
+      RUN_RETENTION_DAYS: ${RUN_RETENTION_DAYS:-30}
+      SESSION_TTL_HOURS: ${SESSION_TTL_HOURS:-24}
+      ALLOW_SHELL: ${ALLOW_SHELL:-true}
+      TRUST_PROXY: ${TRUST_PROXY:-false}
+    volumes:
+      - crondeck-data:/data
+    # Snapshot temp files live on /data; only script execution uses /tmp.
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    read_only: true
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    stop_grace_period: 45s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  crondeck-data:
